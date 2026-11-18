@@ -31,3 +31,10 @@ The aliases exist so that code can read either as "convert to JDN" or "convert f
 ## Awkward edge
 
 The JDN changes at noon UT, not midnight. A `Date` at 00:00:00Z has a JDN ending in `.5`, while noon has an integer JDN. If you are comparing JDN values for calendar dates, round to the nearest integer to get the JDN for the civil day starting at midnight.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
